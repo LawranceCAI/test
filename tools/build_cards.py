@@ -14,12 +14,8 @@ def norm(s: str) -> str:
     return re.sub(r"\s+", " ", (s or "").strip())
 
 def is_heading(style: str, text: str) -> bool:
-    if style and ("Heading" in style or "Title" in style):
-        return True
-    # fallback heuristics
-    if len(text) <= 60 and not any(ch in text for ch in ".;:=") and len(text.split()) <= 10:
-        return True
-    return False
+    # ONLY top-level headings become topics
+    return (style or "").strip() == "Heading 1"
 
 def split_bullets(text: str):
     t = norm(text)
